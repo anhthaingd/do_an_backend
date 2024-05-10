@@ -44,6 +44,7 @@ export const registerService = ({
         message: token ? "Success register" : "Phone existed",
         token: token || null,
         userId: response[0].id,
+        role: response.role,
       });
     } catch (error) {
       reject(error);
@@ -77,6 +78,7 @@ export const loginService = ({ phone, password }) =>
           : "Phone not found",
         token: token || null,
         userId: token ? response.id : null,
+        role: token ? response.role : null,
       });
     } catch (error) {
       reject(error);

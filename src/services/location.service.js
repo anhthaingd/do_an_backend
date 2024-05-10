@@ -13,6 +13,7 @@ const createLocation = async ({
   close_time,
   image,
   coordinates,
+  name
 }) => {
   try {
     const locations = await Location.create({
@@ -28,6 +29,7 @@ const createLocation = async ({
       close_time,
       image,
       coordinates,
+      name
     });
     return locations;
   } catch (error) {
@@ -75,9 +77,47 @@ const deleteLocation = async (id) => {
     console.log(error);
   }
 };
+
+const getLocationByType = async (type) => {
+  try {
+    const data = await Location.findAll({
+      where: { type: type },
+    });
+    return data;
+  } catch (error) {
+    console.log("Error at getLocationByType: ", error);
+  }
+};
+
+const getLocationByTypeLimit = async (type, offset) => {
+  try {
+    const data = await Location.findAndCountAll({
+      where: { type: type },
+      offset: (offset - 1) * 12 || 0,
+      limit: 12,
+    });
+    return data;
+  } catch (error) {
+    console.log("Error at getLocationByTypeLimit: ", error);
+  }
+}
+
+const getLocationByUserID = async (ownerID) => {
+  try {
+    const data = await Location.findAll({
+      where: { ownerID: ownerID },
+    });
+    return data;
+  } catch (error) {
+    console.log("Error at getLocationByUserID: ", error);
+  }
+}
 module.exports = {
   createLocation,
   getLocationByID,
   updateLocation,
   deleteLocation,
+  getLocationByType,
+  getLocationByTypeLimit,
+  getLocationByUserID
 };

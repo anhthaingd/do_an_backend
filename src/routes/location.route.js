@@ -4,4 +4,7 @@ locationRouter.post("", locationController.createLocation);
 locationRouter.get("/:id", locationController.getLocationByID);
 locationRouter.put("/:id", locationController.updateLocation);
 locationRouter.delete("/:id", locationController.deleteLocation);
+locationRouter.get("/type/:type", locationController.getLocationByType);
+locationRouter.get("/type/:type/limit", locationController.getLocationByTypeLimit);
+locationRouter.get("/owner/:ownerID", locationController.getLocationByUserID);
 module.exports = locationRouter;

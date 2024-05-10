@@ -27,9 +27,17 @@ const updatePlayground = async (req, res) => {
     data: await playgroundService.updatePlayground(req.params.id, req.body),
   });
 };
+const getPlaygroundByLocationID = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await playgroundService.getPlaygroundByLocationID(req.params.locationID),
+  });
+}
+
 module.exports = {
   createPlayground,
   deletePlayground,
   getPlaygroundByID,
-  updatePlayground
+  updatePlayground,
+  getPlaygroundByLocationID
 };

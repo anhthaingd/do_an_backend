@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Location.init(
     {
       ownerID: DataTypes.INTEGER,
+      name: DataTypes.STRING,
       description: DataTypes.STRING,
       sale: DataTypes.INTEGER,
       type: DataTypes.INTEGER,
