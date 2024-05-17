@@ -24,10 +24,13 @@ module.exports = {
         },
       },
       start_time: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
       },
       end_time: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
+      },
+      date: {
+        type: Sequelize.STRING,
       },
       locationID: {
         type: Sequelize.INTEGER,

@@ -11,6 +11,7 @@ const createMatch = async ({
   result,
   note,
   playgroundID,
+  date,
 }) => {
   try {
     const match = await Match.create({
@@ -24,6 +25,7 @@ const createMatch = async ({
       result,
       note,
       playgroundID,
+      date,
     });
     return match;
   } catch (error) {
@@ -71,9 +73,32 @@ const deleteMatch = async (id) => {
     console.log(error);
   }
 };
+
+const getMatchByDateAndPlaygroundID = async ({ date, playgroundID }) => {
+  try {
+    const data = await Match.findAll({
+      where: { date: date, playgroundID: playgroundID },
+    });
+    return data;
+  } catch (error) {
+    console.log("Error at getMatchByDateAndPlaygroundID: ", error);
+  }
+};
+const getMatchByDateAndLocationID = async ({ date, locationID }) => {
+  try {
+    const data = await Match.findAll({
+      where: { date: date, locationID: locationID },
+    });
+    return data;
+  } catch (error) {
+    console.log("Error at getMatchByDateAndLocationID: ", error);
+  }
+}
 module.exports = {
   createMatch,
   getMatchByID,
   updateMatch,
   deleteMatch,
+  getMatchByDateAndPlaygroundID,
+  getMatchByDateAndLocationID
 };

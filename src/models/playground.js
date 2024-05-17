@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   PlayGround.init(
     {
+      name: DataTypes.STRING,
       locationID: DataTypes.INTEGER,
       width: DataTypes.FLOAT,
       length: DataTypes.FLOAT,

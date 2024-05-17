@@ -28,10 +28,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Match.init(
     {
+      
       ownerID: DataTypes.INTEGER,
       opponentID: DataTypes.INTEGER,
-      start_time: DataTypes.DATE,
-      end_time: DataTypes.DATE,
+      start_time: DataTypes.STRING,
+      end_time: DataTypes.STRING,
+      date: DataTypes.STRING,
       locationID: DataTypes.INTEGER,
       price: DataTypes.INTEGER,
       status: DataTypes.INTEGER, // 0: pending, 1: ok, 2: cancel

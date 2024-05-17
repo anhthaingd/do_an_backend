@@ -1,8 +1,15 @@
-const { PlayGround } = require("../models");
-
-const createPlayground = async ({ locationID, width, length, price, type }) => {
+const { PlayGround, Location } = require("../models");
+const createPlayground = async ({
+  name,
+  locationID,
+  width,
+  length,
+  price,
+  type,
+}) => {
   try {
     const playground = await PlayGround.create({
+      name,
       locationID,
       width,
       length,
@@ -60,16 +67,22 @@ const getPlaygroundByLocationID = async (locationID) => {
   try {
     const data = await PlayGround.findAll({
       where: { locationID: locationID },
+      include: [
+        {
+          model: Location,
+          as: "location",
+        },
+      ],
     });
     return data;
   } catch (error) {
     console.log("Error at getPlaygroundByLocationID: ", error);
   }
-}
+};
 module.exports = {
   createPlayground,
   deletePlayground,
   getPlaygroundByID,
   updatePlayground,
-  getPlaygroundByLocationID
+  getPlaygroundByLocationID,
 };

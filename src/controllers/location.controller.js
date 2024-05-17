@@ -35,10 +35,10 @@ const getLocationByType = async (req, res) => {
   });
 }
 const getLocationByTypeLimit = async (req, res) => {
-  const { page } = req.query;
+  // const { page } = req.query;
   return res.status(200).json({
     success: true,
-    data: await locationService.getLocationByTypeLimit(req.params.type, page),
+    data: await locationService.getLocationByTypeLimit(req.query),
   });
 }
 

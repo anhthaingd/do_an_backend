@@ -1,4 +1,5 @@
-const { Location } = require("../models");
+// const { Op } = require("sequelize");
+const { Location, User, Op } = require("../models");
 
 const createLocation = async ({
   ownerID,
@@ -13,7 +14,7 @@ const createLocation = async ({
   close_time,
   image,
   coordinates,
-  name
+  name,
 }) => {
   try {
     const locations = await Location.create({
@@ -29,7 +30,7 @@ const createLocation = async ({
       close_time,
       image,
       coordinates,
-      name
+      name,
     });
     return locations;
   } catch (error) {
@@ -41,6 +42,12 @@ const getLocationByID = async (id) => {
   try {
     const data = await Location.findOne({
       where: { id: id },
+      include: [
+        {
+          model: User,
+          as: "owner",
+        },
+      ],
     });
     return data;
   } catch (error) {
@@ -89,18 +96,47 @@ const getLocationByType = async (type) => {
   }
 };
 
-const getLocationByTypeLimit = async (type, offset) => {
+const getLocationByTypeLimit = async (queryParams) => {
+  const { province, district, ward, type, page = 1, max } = queryParams;
+  console.log(queryParams);
+  let where = {};
+  if (province) {
+    where.province = {
+      [Op.like]: `%${province}%`,
+    };
+  }
+  if (district) {
+    where.district = {
+      [Op.like]: `%${district}%`,
+    };
+  }
+  if (ward) {
+    where.ward = {
+      [Op.like]: `%${ward}%`,
+    };
+  }
+  if (type) {
+    where.type = {
+      [Op.eq]: type,
+    };
+  }
   try {
     const data = await Location.findAndCountAll({
-      where: { type: type },
-      offset: (offset - 1) * 12 || 0,
-      limit: 12,
+      where: { ...where },
+      include: [
+        {
+          model: User,
+          as: "owner",
+        },
+      ],
+      offset: (page - 1) * max || 0,
+      limit: parseInt(max) || 1000,
     });
     return data;
   } catch (error) {
     console.log("Error at getLocationByTypeLimit: ", error);
   }
-}
+};
 
 const getLocationByUserID = async (ownerID) => {
   try {
@@ -111,7 +147,8 @@ const getLocationByUserID = async (ownerID) => {
   } catch (error) {
     console.log("Error at getLocationByUserID: ", error);
   }
-}
+};
+
 module.exports = {
   createLocation,
   getLocationByID,
@@ -119,5 +156,5 @@ module.exports = {
   deleteLocation,
   getLocationByType,
   getLocationByTypeLimit,
-  getLocationByUserID
+  getLocationByUserID,
 };
