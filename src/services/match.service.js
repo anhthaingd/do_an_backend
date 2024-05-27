@@ -1,4 +1,4 @@
-const { Match } = require("../models");
+const { Match, PlayGround } = require("../models");
 
 const createMatch = async ({
   ownerID,
@@ -88,6 +88,12 @@ const getMatchByDateAndLocationID = async ({ date, locationID }) => {
   try {
     const data = await Match.findAll({
       where: { date: date, locationID: locationID },
+      include: [
+        {
+          model: PlayGround,
+          as: "playground",
+        },
+      ],
     });
     return data;
   } catch (error) {

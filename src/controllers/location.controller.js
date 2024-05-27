@@ -33,21 +33,29 @@ const getLocationByType = async (req, res) => {
     success: true,
     data: await locationService.getLocationByType(req.params.type),
   });
-}
+};
 const getLocationByTypeLimit = async (req, res) => {
   // const { page } = req.query;
   return res.status(200).json({
     success: true,
     data: await locationService.getLocationByTypeLimit(req.query),
   });
-}
+};
 
 const getLocationByUserID = async (req, res) => {
   return res.status(200).json({
     success: true,
     data: await locationService.getLocationByUserID(req.params.ownerID),
   });
-}
+};
+
+const getAllLocation = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await locationService.getAllLocation(),
+  });
+};
+
 module.exports = {
   createLocation,
   getLocationByID,
@@ -55,5 +63,6 @@ module.exports = {
   deleteLocation,
   getLocationByType,
   getLocationByTypeLimit,
-  getLocationByUserID
+  getLocationByUserID,
+  getAllLocation
 };

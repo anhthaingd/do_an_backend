@@ -129,6 +129,7 @@ const getLocationByTypeLimit = async (queryParams) => {
           as: "owner",
         },
       ],
+      order: [["createdAt", "DESC"]],
       offset: (page - 1) * max || 0,
       limit: parseInt(max) || 1000,
     });
@@ -142,10 +143,20 @@ const getLocationByUserID = async (ownerID) => {
   try {
     const data = await Location.findAll({
       where: { ownerID: ownerID },
+      order: [["createdAt", "DESC"]],
     });
     return data;
   } catch (error) {
     console.log("Error at getLocationByUserID: ", error);
+  }
+};
+
+const getAllLocation = async () => {
+  try {
+    const data = await Location.findAll();
+    return data;
+  } catch (error) {
+    console.log("Error at getAllLocation: ", error);
   }
 };
 
@@ -157,4 +168,5 @@ module.exports = {
   getLocationByType,
   getLocationByTypeLimit,
   getLocationByUserID,
+  getAllLocation,
 };

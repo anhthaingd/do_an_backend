@@ -4,6 +4,7 @@ const sequelize = new Sequelize("do_an", "root", null, {
   host: "localhost",
   dialect: "mysql",
   logging: false,
+  timezone: "+07:00"
 });
 
 const connectDb = async () => {
