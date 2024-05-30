@@ -13,7 +13,23 @@ const getGroupById = async (req, res) => {
     data: await groupService.getGroupById(req.params.groupID),
   });
 };
+
+const searchGroup = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await groupService.searchGroup(req.query),
+  });
+};
+
+const getAllGroup = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await groupService.getAllGroup(),
+  });
+};
 module.exports = {
   createGroup,
-  getGroupById
+  getGroupById,
+  searchGroup,
+  getAllGroup
 };

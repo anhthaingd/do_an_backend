@@ -98,7 +98,6 @@ const getLocationByType = async (type) => {
 
 const getLocationByTypeLimit = async (queryParams) => {
   const { province, district, ward, type, page = 1, max } = queryParams;
-  console.log(queryParams);
   let where = {};
   if (province) {
     where.province = {

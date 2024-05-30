@@ -1,4 +1,4 @@
-const { Group } = require("../models");
+const { Group, Op } = require("../models");
 
 const createGroup = async ({ name, description, image, ownerID }) => {
   try {
@@ -47,9 +47,38 @@ const getLikeByLocationID = async (locationID) => {
     console.error(error);
   }
 };
+
+const searchGroup = async (query) => {
+  try {
+    const { name } = query;
+    const groups = await Group.findAll({
+      where: {
+        name: {
+          [Op.like]: "%" + name + "%",
+        },
+      },
+    });
+
+    return groups;
+  } catch (error) {
+    console.error("Error in searchGroup: ", error);
+    throw error;
+  }
+};
+
+const getAllGroup = async () => {
+  try {
+    const groups = await Group.findAll();
+    return groups;
+  } catch (error) {
+    console.error(error);
+  }
+};
 module.exports = {
   createGroup,
   getGroupById,
   deleteLike,
   getLikeByLocationID,
+  searchGroup,
+  getAllGroup
 };
