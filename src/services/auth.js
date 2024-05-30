@@ -45,6 +45,7 @@ export const registerService = ({
         token: token || null,
         userId: response[0].id,
         role: response.role,
+        loginUserIDRd: response[0].id,
       });
     } catch (error) {
       reject(error);
@@ -79,6 +80,7 @@ export const loginService = ({ phone, password }) =>
         token: token || null,
         userId: token ? response.id : null,
         role: token ? response.role : null,
+        loginUserIDRd: token ? response.role : null,
       });
     } catch (error) {
       reject(error);
