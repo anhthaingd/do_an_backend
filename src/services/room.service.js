@@ -1,5 +1,6 @@
 const { Room, User, Group } = require("../models");
 import moment from "moment";
+import { getMessageByInboxHash } from "../services/chat.service";
 const createRoom = async ({ ownerID, receiverID }) => {
   try {
     const now = Date.now();
@@ -85,8 +86,80 @@ const updateRoom = async (roomID) => {
     throw error;
   }
 };
+
+const getRoomByInboxHash = async ({ inboxHash }) => {
+  try {
+    const room = await Room.findAll({
+      where: {
+        inboxHash,
+      },
+    });
+
+    return room;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const getRoomByOwnerIDAndReceiverID = async ({ ownerID, receiverID }) => {
+  try {
+    const room = await Room.findOne({
+      where: {
+        ownerID,
+        receiverID,
+      },
+      include: [
+        {
+          model: User,
+          as: "receiver",
+        },
+        {
+          model: User,
+          as: "owner",
+        },
+      ],
+    });
+
+    return room;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const getRoomByID = async (roomID) => {
+  try {
+    const room = await Room.findOne({
+      where: {
+        id: roomID,
+      },
+      include: [
+        {
+          model: User,
+          as: "receiver",
+        },
+        {
+          model: User,
+          as: "owner",
+        },
+      ],
+    });
+    room.unSeenNumbers = 0;
+    room.seen = moment().format("YYYY-MM-DD HH:mm:ss");
+    await room.save();
+    const messages = await getMessageByInboxHash({ inboxHash: room.inboxHash });
+    return { room, messages };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 module.exports = {
   createRoom,
   getRoomByUserID,
   updateRoom,
+  getRoomByInboxHash,
+  getRoomByOwnerIDAndReceiverID,
+  getRoomByID,
 };

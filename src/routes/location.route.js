@@ -1,6 +1,10 @@
 const locationRouter = require("express").Router();
 const locationController = require("./../controllers/location.controller");
 locationRouter.post("", locationController.createLocation);
+locationRouter.get(
+  "/geocoding",
+  locationController.getLocationByGeocodingAndRadius
+);
 locationRouter.get("/all", locationController.getAllLocation);
 locationRouter.get("/:id", locationController.getLocationByID);
 locationRouter.put("/:id", locationController.updateLocation);

@@ -20,8 +20,22 @@ const updateRoom = async (req, res) => {
     data: await roomService.updateRoom(req.params.roomID),
   });
 }
+const getRoomByInboxHash = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await roomService.getRoomByInboxHash(req.body),
+  });
+}
+const getRoomByID = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await roomService.getRoomByID(req.params.roomID),
+  });
+};
 module.exports = {
   createRoom,
   getRoomByUserID,
-  updateRoom
+  updateRoom,
+  getRoomByInboxHash,
+  getRoomByID
 };

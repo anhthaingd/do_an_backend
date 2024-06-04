@@ -56,6 +56,13 @@ const getAllLocation = async (req, res) => {
   });
 };
 
+const getLocationByGeocodingAndRadius = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await locationService.getLocationByGeocodingAndRadius(req.query),
+  });
+};
+
 module.exports = {
   createLocation,
   getLocationByID,
@@ -64,5 +71,6 @@ module.exports = {
   getLocationByType,
   getLocationByTypeLimit,
   getLocationByUserID,
-  getAllLocation
+  getAllLocation,
+  getLocationByGeocodingAndRadius
 };

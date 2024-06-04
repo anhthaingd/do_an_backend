@@ -1,5 +1,5 @@
 // const { Op } = require("sequelize");
-const { Location, User, Op } = require("../models");
+const { Location, User, Op, sequelize } = require("../models");
 
 const createLocation = async ({
   ownerID,
@@ -13,10 +13,13 @@ const createLocation = async ({
   open_time,
   close_time,
   image,
-  coordinates,
+  longitude,
+  latitude,
   name,
 }) => {
   try {
+    const point = { type: "Point", coordinates: [longitude, latitude] };
+
     const locations = await Location.create({
       ownerID,
       description,
@@ -29,7 +32,7 @@ const createLocation = async ({
       open_time,
       close_time,
       image,
-      coordinates,
+      coordinates: point,
       name,
     });
     return locations;
@@ -159,6 +162,40 @@ const getAllLocation = async () => {
   }
 };
 
+const getLocationByGeocodingAndRadius = async ({
+  longitude,
+  latitude,
+  radius = 20,
+  type,
+}) => {
+  try {
+    let whereClause = {
+      [Op.and]: [
+        sequelize.where(
+          sequelize.fn(
+            "ST_Distance_Sphere",
+            sequelize.col("coordinates"),
+            sequelize.fn("ST_GeomFromText", `POINT(${longitude} ${latitude})`)
+          ),
+          { [Op.lte]: radius * 1000 } // Convert radius to meters
+        ),
+      ],
+    };
+
+    if (type) {
+      whereClause[Op.and].push({ type });
+    }
+
+    const data = await Location.findAll({
+      where: whereClause,
+    });
+    return data;
+  } catch (error) {
+    console.log("Error at getLocationByGeocodingAndRadius: ", error);
+    throw error;
+  }
+};
+
 module.exports = {
   createLocation,
   getLocationByID,
@@ -168,4 +205,5 @@ module.exports = {
   getLocationByTypeLimit,
   getLocationByUserID,
   getAllLocation,
+  getLocationByGeocodingAndRadius,
 };
