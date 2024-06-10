@@ -39,12 +39,22 @@ const getMatchByDateAndLocationID = async (req, res) => {
     success: true,
     data: await matchService.getMatchByDateAndLocationID(req?.body),
   });
-}
+};
+
+const getMatchByUserID = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await matchService.getMatchByUserID(req.params.userID),
+  });
+};
+
+
 module.exports = {
   createMatch,
   getMatchByID,
   updateMatch,
   deleteMatch,
   getMatchByDateAndPlaygroundID,
-  getMatchByDateAndLocationID
+  getMatchByDateAndLocationID,
+  getMatchByUserID,
 };

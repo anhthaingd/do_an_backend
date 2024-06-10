@@ -2,41 +2,46 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Posts", {
+    await queryInterface.createTable("Information", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      groupID: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "groups",
-          key: "id",
-          onDelete: "CASCADE",
-        },
-      },
       userID: {
         type: Sequelize.INTEGER,
         references: {
           model: "Users",
           key: "id",
+          onDelete: "CASCADE",
         },
       },
-      matchID: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "matches",
-          key: "id",
-        },
-      },
-      content: {
+      workplace: {
         type: Sequelize.STRING,
       },
-      image: {
+      highSchool: {
         type: Sequelize.STRING,
       },
+      university: {
+        type: Sequelize.STRING,
+      },
+      address: {
+        type: Sequelize.STRING,
+      },
+      homeTown: {
+        type: Sequelize.STRING,
+      },
+      province: {
+        type: Sequelize.STRING,
+      },
+      district: {
+        type: Sequelize.STRING,
+      },
+      ward: {
+        type: Sequelize.STRING,
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -46,18 +51,8 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    await queryInterface.addConstraint("Posts", {
-      fields: ["groupID"],
-      type: "foreign key",
-      name: "FK_Posts_groupID",
-      references: {
-        table: "Groups",
-        field: "id",
-      },
-      onDelete: "CASCADE",
-    });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Posts");
+    await queryInterface.dropTable("Information");
   },
 };

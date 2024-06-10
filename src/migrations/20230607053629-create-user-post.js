@@ -2,22 +2,22 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Posts", {
+    await queryInterface.createTable("UserPosts", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      groupID: {
+      ownerID: {
         type: Sequelize.INTEGER,
         references: {
-          model: "groups",
+          model: "Users",
           key: "id",
           onDelete: "CASCADE",
         },
       },
-      userID: {
+      writerID: {
         type: Sequelize.INTEGER,
         references: {
           model: "Users",
@@ -46,18 +46,8 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    await queryInterface.addConstraint("Posts", {
-      fields: ["groupID"],
-      type: "foreign key",
-      name: "FK_Posts_groupID",
-      references: {
-        table: "Groups",
-        field: "id",
-      },
-      onDelete: "CASCADE",
-    });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Posts");
+    await queryInterface.dropTable("UserPosts");
   },
 };

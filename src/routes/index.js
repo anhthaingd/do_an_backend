@@ -12,6 +12,10 @@ import likePostRouter from "./likepost.route";
 import commentPostRouter from "./commentpost.route";
 import roomRouter from "./room.route";
 import chatRouter from "./chat.route";
+import userPostRouter from "./userpost.route";
+import informationRouter from "./information.route";
+import hobbyRouter from "./hobby.route";
+import achievementRouter from "./achievement.route";
 const initRoutes = (app) => {
   app.use("/api/v1/auth", authRouter);
   app.use("/api/v1/location", locationRouter);
@@ -27,6 +31,10 @@ const initRoutes = (app) => {
   app.use("/api/v1/commentpost", commentPostRouter);
   app.use("/api/v1/room", roomRouter);
   app.use("/api/v1/chat", chatRouter);
+  app.use("/api/v1/userpost", userPostRouter);
+  app.use("/api/v1/information", informationRouter);
+  app.use("/api/v1/hobby", hobbyRouter);
+  app.use("/api/v1/achievement", achievementRouter);
   return app.use("/", (req, res) => {
     res.send("server on....");
   });

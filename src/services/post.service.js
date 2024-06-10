@@ -1,12 +1,13 @@
 const { Post, User, Group } = require("../models");
 
-const createPost = async ({ userID, groupID, content, image }) => {
+const createPost = async ({ userID, groupID, content, image, matchID }) => {
   try {
     const post = await Post.create({
       userID,
       groupID,
       content,
       image,
+      matchID
     });
     return post;
   } catch (error) {

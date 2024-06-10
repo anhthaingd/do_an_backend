@@ -1,4 +1,4 @@
-const { Match, PlayGround } = require("../models");
+const { Match, PlayGround, Location, User, Op } = require("../models");
 
 const createMatch = async ({
   ownerID,
@@ -37,6 +37,24 @@ const getMatchByID = async (id) => {
   try {
     const data = await Match.findOne({
       where: { id: id },
+      include: [
+        {
+          model: PlayGround,
+          as: "playground",
+        },
+        {
+          model: Location,
+          as: "location",
+        },
+        {
+          model: User,
+          as: "owner",
+        },
+        {
+          model: User,
+          as: "opponent",
+        },
+      ],
     });
     return data;
   } catch (error) {
@@ -78,6 +96,24 @@ const getMatchByDateAndPlaygroundID = async ({ date, playgroundID }) => {
   try {
     const data = await Match.findAll({
       where: { date: date, playgroundID: playgroundID },
+      include: [
+        {
+          model: PlayGround,
+          as: "playground",
+        },
+        {
+          model: Location,
+          as: "location",
+        },
+        {
+          model: User,
+          as: "owner",
+        },
+        {
+          model: User,
+          as: "opponent",
+        },
+      ],
     });
     return data;
   } catch (error) {
@@ -93,18 +129,63 @@ const getMatchByDateAndLocationID = async ({ date, locationID }) => {
           model: PlayGround,
           as: "playground",
         },
+        {
+          model: Location,
+          as: "location",
+        },
+        {
+          model: User,
+          as: "owner",
+        },
+        {
+          model: User,
+          as: "opponent",
+        },
       ],
     });
     return data;
   } catch (error) {
     console.log("Error at getMatchByDateAndLocationID: ", error);
   }
-}
+};
+
+const getMatchByUserID = async (userID) => {
+  try {
+    const matches = await Match.findAll({
+      where: {
+        [Op.or]: [{ ownerID: userID }, { opponentID: userID }],
+      },
+      include: [
+        {
+          model: PlayGround,
+          as: "playground",
+        },
+        {
+          model: Location,
+          as: "location",
+        },
+        {
+          model: User,
+          as: "owner",
+        },
+        {
+          model: User,
+          as: "opponent",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+    return matches;
+  } catch (error) {
+    console.log("Error at getMatchByUserID: ", error);
+  }
+};
 module.exports = {
   createMatch,
   getMatchByID,
   updateMatch,
   deleteMatch,
   getMatchByDateAndPlaygroundID,
-  getMatchByDateAndLocationID
+  getMatchByDateAndLocationID,
+  getMatchByUserID,
 };
