@@ -20,16 +20,15 @@ io.on("connection", (socket) => {
     !onlineUsers.some((user) => user.userID === userID) &&
       userID !== null &&
       onlineUsers.push({ userID: userID, socketID: socket.id });
-    console.log("onlineUsers", onlineUsers);
     io.emit("getOnlineUsers", onlineUsers);
   });
   socket.on("sendMessage", async (message) => {
-    const user = onlineUsers.find((user) => user.userID === message.receiverID);
+    const user = onlineUsers.find((user) => user.userID == message.receiverID);
     const currentUser = onlineUsers.find(
-      (user) => user.userID === message.senderID
+      (user) => user.userID == message.senderID
     );
-    // console.log("message", message);
-    const inboxHash = message.newMessage.inboxHash;
+
+    const inboxHash = message?.newMessage?.inboxHash;
     const messages = await getMessageByInboxHash({ inboxHash });
     const room = await getRoomByOwnerIDAndReceiverID({
       ownerID: message.receiverID,
@@ -39,7 +38,7 @@ io.on("connection", (socket) => {
       ownerID: message.senderID,
       receiverID: message.receiverID,
     });
-    io.to(currentUser.socketID).emit("sendPrivateChat", {
+    io.to(currentUser?.socketID).emit("sendPrivateChat", {
       room: room1,
       messages,
     });

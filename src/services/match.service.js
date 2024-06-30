@@ -1,5 +1,6 @@
 const { Match, PlayGround, Location, User, Op } = require("../models");
 
+
 const createMatch = async ({
   ownerID,
   opponentID,
@@ -12,8 +13,41 @@ const createMatch = async ({
   note,
   playgroundID,
   date,
+  isPublic,
 }) => {
   try {
+    // Kiểm tra xem có bất kỳ trận đấu nào đã tồn tại trong khoảng thời gian này không
+    const overlappingMatches = await Match.findOne({
+      where: {
+        locationID,
+        date,
+        playgroundID,
+        [Op.or]: [
+          {
+            start_time: {
+              [Op.lte]: end_time,
+            },
+            end_time: {
+              [Op.gte]: start_time,
+            },
+          },
+          {
+            start_time: {
+              [Op.lte]: start_time,
+            },
+            end_time: {
+              [Op.gte]: end_time,
+            },
+          },
+        ],
+      },
+    });
+
+    if (overlappingMatches) {
+      return false; // Có trận đấu trùng lặp trong khoảng thời gian này
+    }
+
+    // Tạo trận đấu mới
     const match = await Match.create({
       ownerID,
       opponentID,
@@ -26,10 +60,13 @@ const createMatch = async ({
       note,
       playgroundID,
       date,
+      isPublic,
     });
+
     return match;
   } catch (error) {
-    console.error("Error creating createMatch:", error);
+    console.error('Error creating createMatch:', error);
+    throw new Error('Error creating match');
   }
 };
 

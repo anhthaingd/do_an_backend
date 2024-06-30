@@ -41,10 +41,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
       open_time: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
       },
       close_time: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
       },
       image: {
         type: Sequelize.STRING,

@@ -1,10 +1,25 @@
 const matchService = require("../services/match.service");
 
 const createMatch = async (req, res) => {
-  return res.status(200).json({
-    success: true,
-    data: await matchService.createMatch(req.body),
-  });
+  try {
+    const result = await matchService.createMatch(req.body);
+    if (result) {
+      return res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } else {
+      return res.status(200).json({
+        success: false,
+        message: "Khung giờ này đã có người khác đặt.",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error.",
+    });
+  }
 };
 
 const getMatchByID = async (req, res) => {
@@ -47,7 +62,6 @@ const getMatchByUserID = async (req, res) => {
     data: await matchService.getMatchByUserID(req.params.userID),
   });
 };
-
 
 module.exports = {
   createMatch,

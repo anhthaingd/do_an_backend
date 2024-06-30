@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       result: DataTypes.STRING,
       note: DataTypes.STRING,
       playgroundID: DataTypes.INTEGER,
+      isPublic: DataTypes.BOOLEAN,
     },
     {
       sequelize,

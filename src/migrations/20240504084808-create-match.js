@@ -58,6 +58,9 @@ module.exports = {
           key: "id",
         },
       },
+      isPublic: {
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -25,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       district: DataTypes.STRING, // huyen
       ward: DataTypes.STRING, // xa
       location_detail: DataTypes.STRING,
-      open_time: DataTypes.DATE,
-      close_time: DataTypes.DATE,
+      open_time: DataTypes.STRING,
+      close_time: DataTypes.STRING,
       image: DataTypes.STRING,
       rating: DataTypes.FLOAT,
       coordinates: DataTypes.GEOMETRY('POINT')

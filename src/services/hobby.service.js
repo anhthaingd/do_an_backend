@@ -1,4 +1,4 @@
-const { Hobby } = require("../models");
+const { Hobby, User, Op } = require("../models");
 
 const createHobby = async ({ userID, name }) => {
   try {
@@ -37,8 +37,34 @@ const getHobbyByUserID = async (userID) => {
     console.error(error);
   }
 };
+
+const searchHobby = async (queryParams) => {
+  const { hobby } = queryParams;
+  let where = {};
+  if (hobby) {
+    where.name = {
+      [Op.like]: `%${hobby}%`,
+    };
+  }
+  try {
+    const hobbies = await Hobby.findAll({
+      where: { ...where },
+      include: [
+        {
+          model: User,
+          as: "user",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+    return hobbies;
+  } catch (error) {
+    console.error(error);
+  }
+};
 module.exports = {
+  searchHobby,
   createHobby,
   deleteHobby,
-  getHobbyByUserID
+  getHobbyByUserID,
 };

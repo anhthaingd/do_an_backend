@@ -16,6 +16,8 @@ import userPostRouter from "./userpost.route";
 import informationRouter from "./information.route";
 import hobbyRouter from "./hobby.route";
 import achievementRouter from "./achievement.route";
+import commentUserPostRouter from "./commentUserPost.route";
+import likeUserPostRouter from "./likeUserPost.route";
 const initRoutes = (app) => {
   app.use("/api/v1/auth", authRouter);
   app.use("/api/v1/location", locationRouter);
@@ -35,6 +37,8 @@ const initRoutes = (app) => {
   app.use("/api/v1/information", informationRouter);
   app.use("/api/v1/hobby", hobbyRouter);
   app.use("/api/v1/achievement", achievementRouter);
+  app.use("/api/v1/commentUserPost", commentUserPostRouter);
+  app.use("/api/v1/likeUserPost", likeUserPostRouter);
   return app.use("/", (req, res) => {
     res.send("server on....");
   });
