@@ -29,6 +29,16 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addConstraint("Achievements", {
+      fields: ["userID"],
+      type: "foreign key",
+      name: "FK_Achievements_userID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Achievements");

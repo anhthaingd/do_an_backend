@@ -43,7 +43,6 @@ const deleteMatch = async (req, res) => {
   });
 };
 const getMatchByDateAndPlaygroundID = async (req, res) => {
-  console.log(req.body);
   return res.status(200).json({
     success: true,
     data: await matchService.getMatchByDateAndPlaygroundID(req?.body),

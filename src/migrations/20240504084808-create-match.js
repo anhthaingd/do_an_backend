@@ -91,6 +91,28 @@ module.exports = {
       },
       onDelete: "CASCADE",
     });
+
+    await queryInterface.addConstraint("Matches", {
+      fields: ["ownerID"],
+      type: "foreign key",
+      name: "FK_Matches_ownerID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
+
+    await queryInterface.addConstraint("Matches", {
+      fields: ["opponentID"],
+      type: "foreign key",
+      name: "FK_Matches_opponentID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Matches");

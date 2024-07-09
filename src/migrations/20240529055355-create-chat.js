@@ -35,6 +35,16 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addConstraint("Chats", {
+      fields: ["senderID"],
+      type: "foreign key",
+      name: "FK_Chats_senderID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Chats");

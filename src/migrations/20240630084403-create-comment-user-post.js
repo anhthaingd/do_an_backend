@@ -36,6 +36,26 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addConstraint("CommentUserPosts", {
+      fields: ["userID"],
+      type: "foreign key",
+      name: "FK_CommentUserPosts_userID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
+    await queryInterface.addConstraint("CommentUserPosts", {
+      fields: ["userPostID"],
+      type: "foreign key",
+      name: "FK_CommentUserPosts_userPostID",
+      references: {
+        table: "UserPosts",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("CommentUserPosts");

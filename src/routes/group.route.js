@@ -5,4 +5,5 @@ groupRouter.get("", groupController.getAllGroup);
 groupRouter.get("/search", groupController.searchGroup);
 groupRouter.post("", groupController.createGroup);
 groupRouter.get("/:groupID", groupController.getGroupById);
+groupRouter.delete("/:groupID", groupController.deleteGroup);
 module.exports = groupRouter;

@@ -47,6 +47,16 @@ module.exports = {
       },
       onDelete: "CASCADE",
     });
+    await queryInterface.addConstraint("Likes", {
+      fields: ["userID"],
+      type: "foreign key",
+      name: "FK_Likes_userID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Likes");

@@ -27,9 +27,17 @@ const getAllGroup = async (req, res) => {
     data: await groupService.getAllGroup(),
   });
 };
+
+const deleteGroup = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await groupService.deleteGroup(req.params.groupID),
+  });
+};
 module.exports = {
   createGroup,
   getGroupById,
   searchGroup,
-  getAllGroup
+  getAllGroup,
+  deleteGroup
 };

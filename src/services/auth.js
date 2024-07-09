@@ -41,7 +41,7 @@ export const registerService = ({
         );
       resolve({
         err: token ? 0 : 2,
-        message: token ? "Success register" : "Phone existed",
+        message: token ? "Đăng ký thành công" : "Số điện thoại đã tồn tại",
         token: token || null,
         userId: response[0].id,
         role: response.role,
@@ -73,10 +73,10 @@ export const loginService = ({ phone, password }) =>
       resolve({
         err: token ? 0 : 2,
         message: token
-          ? "Success login"
+          ? "Đăng nhập thành công"
           : response
-          ? "Password incorrect"
-          : "Phone not found",
+          ? "Sai mật khẩu"
+          : "Không có số điện thoại này",
         token: token || null,
         userId: token ? response.id : null,
         role: token ? response.role : null,

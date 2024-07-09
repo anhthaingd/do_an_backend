@@ -46,6 +46,36 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addConstraint("UserPosts", {
+      fields: ["ownerID"],
+      type: "foreign key",
+      name: "FK_UserPosts_ownerID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
+    await queryInterface.addConstraint("UserPosts", {
+      fields: ["writerID"],
+      type: "foreign key",
+      name: "FK_UserPosts_writerID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
+    await queryInterface.addConstraint("UserPosts", {
+      fields: ["matchID"],
+      type: "foreign key",
+      name: "FK_UserPosts_matchID",
+      references: {
+        table: "Matches",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("UserPosts");

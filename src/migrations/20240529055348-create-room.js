@@ -53,6 +53,26 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addConstraint("Rooms", {
+      fields: ["ownerID"],
+      type: "foreign key",
+      name: "FK_Rooms_ownerID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
+    await queryInterface.addConstraint("Rooms", {
+      fields: ["receiverID"],
+      type: "foreign key",
+      name: "FK_Rooms_receiverID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Rooms");

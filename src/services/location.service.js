@@ -70,9 +70,7 @@ const updateLocation = async (id, data) => {
     // Update the post with the new data
     await existingLocation.update(data);
     return existingLocation;
-  } catch (error) {
-    console.log("Error at updateLocation: ", error);
-  }
+  } catch (error) {}
 };
 
 const deleteLocation = async (id) => {

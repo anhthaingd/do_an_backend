@@ -64,6 +64,16 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addConstraint("Locations", {
+      fields: ["ownerID"],
+      type: "foreign key",
+      name: "FK_Locations_ownerID",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+      onDelete: "CASCADE",
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Locations");

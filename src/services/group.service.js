@@ -1,4 +1,4 @@
-const { Group, Op } = require("../models");
+const { Group, Op, User } = require("../models");
 
 const createGroup = async ({ name, description, image, ownerID }) => {
   try {
@@ -68,8 +68,28 @@ const searchGroup = async (query) => {
 
 const getAllGroup = async () => {
   try {
-    const groups = await Group.findAll();
+    const groups = await Group.findAll({
+      include: [
+        {
+          model: User,
+          as: "owner",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
     return groups;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const deleteGroup = async (id) => {
+  try {
+    const group = await Group.findOne({
+      where: { id: id },
+    });
+    await group.destroy();
+    return group;
   } catch (error) {
     console.error(error);
   }
@@ -80,5 +100,6 @@ module.exports = {
   deleteLike,
   getLikeByLocationID,
   searchGroup,
-  getAllGroup
+  getAllGroup,
+  deleteGroup
 };

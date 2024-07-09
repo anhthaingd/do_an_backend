@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Op } = require("../models");
 
 const getUserById = async (userId) => {
   try {
@@ -34,8 +34,38 @@ const deleteUser = async (id) => {
     console.log(error);
   }
 };
+
+const findUserByParams = async (params) => {
+  const { username, email, phone } = params;
+  let where = {};
+  if (username) {
+    where.username = {
+      [Op.like]: `%${username}%`,
+    };
+  }
+  if (email) {
+    where.email = {
+      [Op.like]: `%${email}%`,
+    };
+  }
+  if (phone) {
+    where.phone = {
+      [Op.like]: `%${phone}%`,
+    };
+  }
+  try {
+    const data = await User.findAll({
+      where: { ...where },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getUserById,
   getAllUser,
-  deleteUser
+  deleteUser,
+  findUserByParams,
 };

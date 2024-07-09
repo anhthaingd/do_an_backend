@@ -18,7 +18,7 @@ export const register = async (req, res) => {
       // !firstName ||
       // !lastName ||
       // !role ||
-      !phone 
+      !phone
       // !address
     ) {
       return res.status(400).json({
