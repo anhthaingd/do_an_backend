@@ -12,6 +12,12 @@ const deleteMember = async (req, res) => {
     data: await memberService.deleteMember(req.body),
   });
 };
+const updateMember  = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await memberService.updateMember(req.params.memberID),
+  });
+}
 const getMemberByGroupID = async (req, res) => {
   return res.status(200).json({
     success: true,
@@ -29,4 +35,5 @@ module.exports = {
   deleteMember,
   getMemberByGroupID,
   getByUserID,
+  updateMember
 };

@@ -1,11 +1,13 @@
-const { PlayGround, Location } = require("../models");
+const { PlayGround, Location, Op } = require("../models");
 const createPlayground = async ({
   name,
   locationID,
   width,
   length,
   price,
-  type,
+  position,
+  yard_surface,
+  quantity,
 }) => {
   try {
     const playground = await PlayGround.create({
@@ -14,7 +16,9 @@ const createPlayground = async ({
       width,
       length,
       price,
-      type,
+      position,
+      yard_surface,
+      quantity,
     });
     return playground;
   } catch (error) {
@@ -79,10 +83,46 @@ const getPlaygroundByLocationID = async (locationID) => {
     console.log("Error at getPlaygroundByLocationID: ", error);
   }
 };
+
+const searchPlayground = async (queryParams) => {
+  const { position, yard_surface, quantity } = queryParams;
+  if (!position && !yard_surface && !quantity) return;
+  let where = {};
+  if (position) {
+    where.position = {
+      [Op.like]: `%${position}%`,
+    };
+  }
+  if (yard_surface) {
+    where.yard_surface = {
+      [Op.like]: `%${yard_surface}%`,
+    };
+  }
+  if (quantity) {
+    where.quantity = {
+      [Op.like]: `%${quantity}%`,
+    };
+  }
+  try {
+    const data = await PlayGround.findAll({
+      where: { ...where },
+      include: [
+        {
+          model: Location,
+          as: "location",
+        },
+      ],
+    });
+    return data;
+  } catch (error) {
+    console.log("Error at searchPlayground: ", error);
+  }
+};
 module.exports = {
   createPlayground,
   deletePlayground,
   getPlaygroundByID,
   updatePlayground,
   getPlaygroundByLocationID,
+  searchPlayground,
 };

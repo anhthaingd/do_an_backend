@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       width: DataTypes.FLOAT,
       length: DataTypes.FLOAT,
       price: DataTypes.INTEGER,
-      type: DataTypes.INTEGER, // 0: normal, 1: vip
+      position: DataTypes.STRING,
+      yard_surface: DataTypes.STRING,
+      quantity: DataTypes.STRING,
+
     },
     {
       sequelize,

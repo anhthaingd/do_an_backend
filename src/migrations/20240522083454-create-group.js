@@ -25,6 +25,9 @@ module.exports = {
       image: {
         type: Sequelize.STRING,
       },
+      is_private: {
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

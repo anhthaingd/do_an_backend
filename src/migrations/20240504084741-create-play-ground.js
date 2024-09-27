@@ -29,8 +29,14 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER,
       },
-      type: {
-        type: Sequelize.INTEGER,
+      position: {
+        type: Sequelize.STRING,
+      },
+      yard_surface: {
+        type: Sequelize.STRING,
+      },
+      quantity: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

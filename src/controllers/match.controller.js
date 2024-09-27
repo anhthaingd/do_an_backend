@@ -62,6 +62,19 @@ const getMatchByUserID = async (req, res) => {
   });
 };
 
+const getMatchByStatus = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await matchService.getMatchByStatus(req.body),
+  });
+};
+
+const getMatchByStatusAndOwnerID = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await matchService.getMatchByStatusAndOwnerID(req.body),
+  });
+};
 module.exports = {
   createMatch,
   getMatchByID,
@@ -70,4 +83,6 @@ module.exports = {
   getMatchByDateAndPlaygroundID,
   getMatchByDateAndLocationID,
   getMatchByUserID,
+  getMatchByStatus,
+  getMatchByStatusAndOwnerID,
 };

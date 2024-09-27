@@ -163,7 +163,7 @@ const getAllLocation = async () => {
 const getLocationByGeocodingAndRadius = async ({
   longitude,
   latitude,
-  radius = 20,
+  radius = 10,
   type,
 }) => {
   try {

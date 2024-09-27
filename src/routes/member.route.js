@@ -5,4 +5,5 @@ memberRouter.post("", memberController.createMember);
 memberRouter.delete("", memberController.deleteMember);
 memberRouter.get("/group/:groupID", memberController.getMemberByGroupID);
 memberRouter.get("/user/:userID", memberController.getByUserID);
+memberRouter.put("/:memberID", memberController.updateMember);
 module.exports = memberRouter;

@@ -34,10 +34,17 @@ const getPlaygroundByLocationID = async (req, res) => {
   });
 }
 
+const searchPlayground = async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    data: await playgroundService.searchPlayground(req.query),
+  });
+};
 module.exports = {
   createPlayground,
   deletePlayground,
   getPlaygroundByID,
   updatePlayground,
-  getPlaygroundByLocationID
+  getPlaygroundByLocationID,
+  searchPlayground
 };

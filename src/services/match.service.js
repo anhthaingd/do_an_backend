@@ -1,6 +1,5 @@
 const { Match, PlayGround, Location, User, Op } = require("../models");
 
-
 const createMatch = async ({
   ownerID,
   opponentID,
@@ -65,8 +64,8 @@ const createMatch = async ({
 
     return match;
   } catch (error) {
-    console.error('Error creating createMatch:', error);
-    throw new Error('Error creating match');
+    console.error("Error creating createMatch:", error);
+    throw new Error("Error creating match");
   }
 };
 
@@ -217,6 +216,67 @@ const getMatchByUserID = async (userID) => {
     console.log("Error at getMatchByUserID: ", error);
   }
 };
+
+
+const getMatchByStatus = async ({ status, locationID }) => {
+  try {
+    const matches = await Match.findAll({
+      where: { status: status, locationID: locationID },
+      include: [
+        {
+          model: PlayGround,
+          as: "playground",
+        },
+        {
+          model: Location,
+          as: "location",
+        },
+        {
+          model: User,
+          as: "owner",
+        },
+        {
+          model: User,
+          as: "opponent",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+    return matches;
+  } catch (error) {
+    console.log("Error at getMatchByStatus: ", error);
+  }
+};
+
+const getMatchByStatusAndOwnerID = async ({ status, ownerID }) => {
+  try {
+    const matches = await Match.findAll({
+      where: { status: status, ownerID: ownerID },
+      include: [
+        {
+          model: PlayGround,
+          as: "playground",
+        },
+        {
+          model: Location,
+          as: "location",
+        },
+        {
+          model: User,
+          as: "owner",
+        },
+        {
+          model: User,
+          as: "opponent",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+    return matches;
+  } catch (error) {
+    console.log("Error at getMatchByStatus: ", error);
+  }
+}
 module.exports = {
   createMatch,
   getMatchByID,
@@ -225,4 +285,6 @@ module.exports = {
   getMatchByDateAndPlaygroundID,
   getMatchByDateAndLocationID,
   getMatchByUserID,
+  getMatchByStatus,
+  getMatchByStatusAndOwnerID
 };

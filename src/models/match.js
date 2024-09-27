@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       date: DataTypes.STRING,
       locationID: DataTypes.INTEGER,
       price: DataTypes.INTEGER,
-      status: DataTypes.INTEGER, // 0: pending, 1: ok, 2: cancel
+      status: DataTypes.INTEGER, // 0: pending, 1:chủ sân ok, 2:owner pending, 3: opponent pending, 4: done
       result: DataTypes.STRING,
       note: DataTypes.STRING,
       playgroundID: DataTypes.INTEGER,

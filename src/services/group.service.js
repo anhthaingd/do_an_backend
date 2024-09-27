@@ -1,12 +1,19 @@
 const { Group, Op, User } = require("../models");
 
-const createGroup = async ({ name, description, image, ownerID }) => {
+const createGroup = async ({
+  name,
+  description,
+  image,
+  ownerID,
+  is_private,
+}) => {
   try {
     const group = await Group.create({
       name,
       description,
       image,
       ownerID,
+      is_private,
     });
     return group;
   } catch (error) {
@@ -101,5 +108,5 @@ module.exports = {
   getLikeByLocationID,
   searchGroup,
   getAllGroup,
-  deleteGroup
+  deleteGroup,
 };
